@@ -4,9 +4,10 @@
 
 ## Description
 
-This is an Android app similar to Shazam, designed to recognize and identify songs from audio samples. 
+This is an Android app similar to Shazam, designed to recognize and identify songs from audio samples.<br> 
 The app uses java with android sdk. Users can record a short audio clip and the app will attempt to identify the song by matching it with its database of songs. 
-In this repo, I took the database away to avoid the copyright, you can create your own database (int this project I use sqlite).
+In this repo, I took the database away due to size, you can create your own database (in this project I use sqlite) but make sure you have a table name called "songinfo".
+
 
 ## Features
 
