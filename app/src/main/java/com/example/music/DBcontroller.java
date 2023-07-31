@@ -25,9 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class DBcontroller extends AppCompatActivity {
-
-    private EditText songNameEdt, artistEdt, albumEdt, UrlEdt;
-    private Button addSongInfoBtn,readDataBtn, insertDataBtn;
+    private Button readDataBtn, generateFinger, importDatabase;
     private DBHandler dbHandler;
 
     private Thread generateFingerPrint;
@@ -78,30 +76,7 @@ public class DBcontroller extends AppCompatActivity {
 
         dbHandler = new DBHandler(DBcontroller.this);
 
-        addSongInfoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String songName = songNameEdt.getText().toString();
-                String artistName = artistEdt.getText().toString();
-                String albumName = albumEdt.getText().toString();
-                String albumUrl = UrlEdt.getText().toString();
 
-
-                // validating if the text fields are empty or not.
-                if (songName.isEmpty() && artistName.isEmpty() && albumName.isEmpty() && fingerPrintsData==null) {
-                    Toast.makeText(DBcontroller.this, "Please enter all the data..", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                //dbHandler.addNewSong(songName,artistName,albumName, albumUrl ,fingerPrintsData);
-                dbHandler.addFingerprint(songName,fingerPrintsData);
-                Toast.makeText(DBcontroller.this, "Song has been added.", Toast.LENGTH_SHORT).show();
-                songNameEdt.setText("");
-                artistEdt.setText("");
-                albumEdt.setText("");
-                UrlEdt.setText("");
-            }
-        });
 
         readDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,67 +87,46 @@ public class DBcontroller extends AppCompatActivity {
             }
         });
 
-        insertDataBtn.setOnClickListener(new View.OnClickListener() {
+        importDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    //dbHandler.clearTable();
-                    //generateFingerprint();
-                    //generateHashMap();
-                /*try {
-                    generateHashUsingParallel();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }*/
+                //Import database
+                DBImport db = new DBImport(DBcontroller.this);
+                if (db.checkDataBase()){
+                    Toast.makeText(DBcontroller.this, "Database already existed", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    try {
+                        db.createDataBase();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         });
+
+        generateFinger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    generateHashMap();
+                } catch (IOException e) {
+                    Toast.makeText(DBcontroller.this, "No music in folder.", Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+
     }
 
     private void initView(){
-        songNameEdt = findViewById(R.id.idEdtSongName);
-        artistEdt = findViewById(R.id.idEdtArtist);
-        albumEdt = findViewById(R.id.idEdtAlbum);
-        UrlEdt = findViewById(R.id.idEdtAlbumUrl);
-        addSongInfoBtn = findViewById(R.id.idBtnAddData);
         readDataBtn = findViewById(R.id.idBtnReadData);
-        insertDataBtn = findViewById(R.id.idBtnInsert);
+        generateFinger = findViewById(R.id.idBtnGenerateFingerPrint);
+        importDatabase = findViewById(R.id.idBtnImportDatabase);
         tvNumber = findViewById(R.id.tvNumber);
     }
 
-    private void generateFingerprint()  {
-        dbHandler = new DBHandler(DBcontroller.this);
-        int cnt = 0;
-        try {
-            cnt = getFolderCount();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String[] list;
-
-
-        byte[] data;
-        try {
-            list = getResources().getAssets().list("music");
-            for(int i = 0 ; i < cnt ; ++i){
-                //InputStream inputStream =am.open("music/" + list[i]);
-                InputStream inputStream =getAssets().open("music/"+list[i]);
-                Wave wave = new Wave(inputStream);
-                FingerprintManager fingerprintManager = new FingerprintManager();
-                data = fingerprintManager.extractFingerprint(wave);
-                String noExt;
-                noExt = list[i].substring(0,list[i].lastIndexOf('.'));
-                dbHandler.addFingerprint(noExt,data);
-
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }finally {
-            Toast.makeText(DBcontroller.this, "Song has been added.", Toast.LENGTH_SHORT).show();
-        }
-
-
-        //dbHandler.addFingerprint(songName,fing);
-        return;
-    }
 
     private void generateHashUsingParallel() throws IOException {
         dbHandler = new DBHandler(DBcontroller.this);
@@ -197,8 +151,8 @@ public class DBcontroller extends AppCompatActivity {
                         data = fingerprintManager.extractFingerprint(wave);
                         HashMap<Integer, List<Integer>> temp = dataHelper.fingerPrintToHashMap(data);
                         String json = gson.toJson(temp);
-                        long duraion = System.currentTimeMillis() - start;
-                        total += duraion;
+                        long duration = System.currentTimeMillis() - start;
+                        total += duration;
                         inputStream.close();
                         System.out.println("Process time:  " + (System.currentTimeMillis() - start));
                         System.out.println("Song " + i  +" / " + list.length);
@@ -215,20 +169,23 @@ public class DBcontroller extends AppCompatActivity {
 
     }
 
-    private void generateHashMap(){
+    private void generateHashMap() throws IOException {
         dbHandler = new DBHandler(DBcontroller.this);
         DataHelper dataHelper = new DataHelper();
-
+        final String[] list = getResources().getAssets().list("music");
+        if(list.length == 0){
+            Toast.makeText(DBcontroller.this, "No music in folder.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         //Thread gen ;
         generateFingerPrint = new Thread(new Runnable() {
             @Override
             public void run() {
                 long total = 0;
-                String[] list;
+
                 byte[] data;
                 FingerprintManager fingerprintManager = new FingerprintManager();
                 try {
-                    list = getResources().getAssets().list("music");
                     for(int i = 0 ; i < list.length ; ++i){
                         long start = System.currentTimeMillis();
                         InputStream inputStream =getAssets().open("music/"+list[i]);
@@ -250,8 +207,6 @@ public class DBcontroller extends AppCompatActivity {
                     System.out.println("Avg time: " + total / list.length + "  Total time: " +  (total/1000));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-                }finally {
-                    //Toast.makeText(DBcontroller.this, "Song has been added.", Toast.LENGTH_SHORT).show();
                 }
             }
         },"generateFingerPrintThread");
@@ -263,9 +218,7 @@ public class DBcontroller extends AppCompatActivity {
 
 
     private int getFolderCount() throws IOException {
-        int cnt ;
-        cnt = getResources().getAssets().list("music").length;
-
+        final int cnt = getResources().getAssets().list("music").length;;
         return cnt;
     }
 

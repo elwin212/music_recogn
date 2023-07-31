@@ -5,6 +5,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,12 +43,13 @@ public class DBImport extends SQLiteOpenHelper {
             Log.e(TAG, "Database created");
         }
         else {
+
             System.out.println("Database already exist");
         }
     }
 
     // Check that the database file exists in databases folder
-    private boolean checkDataBase() {
+    public boolean checkDataBase() {
         File databaseFile = new File(DB_PATH + DB_NAME);
         return databaseFile.exists();
     }

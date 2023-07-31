@@ -18,61 +18,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.091">
-        <!--Edit text to enter course name-->
-        <EditText
-            android:id="@+id/idEdtSongName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="Enter Song Name" />
 
-        <!--edit text to enter course duration-->
-        <EditText
-            android:id="@+id/idEdtArtist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="Enter Artist" />
-
-        <!--edit text to display course tracks-->
-        <EditText
-            android:id="@+id/idEdtAlbum"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="Enter Album" />
-
-        <!--edit text for course description-->
-        <EditText
-            android:id="@+id/idEdtAlbumUrl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="Enter URL" />
-
-        <!--button for adding new course-->
-        <Button
-            android:id="@+id/idBtnAddData"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Add Data"
-            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/idBtnReadData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:text="Read Data"
             android:textAllCaps="false" />
+
         <Button
-            android:id="@+id/idBtnInsert"
+            android:id="@+id/idBtnGenerateFingerPrint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Insert Data"
+            android:layout_margin="20dp"
+            android:text="Generate FingerPrint"
             android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/idBtnImportDatabase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Import Database"
+            android:textAllCaps="false" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="130dp"
