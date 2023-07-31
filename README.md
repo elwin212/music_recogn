@@ -19,8 +19,9 @@ id, song_name, artist, album, fingerprint, blob_image.
 
 ## Screenshots
 
-![Screenshot 1](screenshots/result.png)
-![Screenshot 2](screenshots/history_screenshot.png)
+![Screenshot 1](screenshots/homepage.png)
+![Screenshot 2](screenshots/result.png)
+![Screenshot 3](screenshots/history_screenshot.png)
 
 ## Installation
 
