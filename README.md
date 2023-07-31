@@ -1,4 +1,4 @@
-# My Shazam-Like Android App
+# My Music Identification App
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -26,9 +26,9 @@ This is an Android app similar to Shazam, designed to recognize and identify son
 
 ## How to Use
 
-- Make sure the app has the permission to recoed the audio
-- Click the button to start listening
-- It will search the database to find matching song
+- Make sure the app has the permission to record the audio
+- Click the button to start listening (4 seconds at least, by default I set up to 12 seconds)
+- It will search the database to find the matching song
 
 ## Technologies Used
 
