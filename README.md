@@ -41,7 +41,17 @@ To use this app, you need to create your own database. I use SQLite in this proj
 - `fingerprint`
 - `blob_image`
 
-Please note that the database has been removed from this repository due to its size.
+### Importing the Database
+
+To import the database (SQLite) into the app, follow these steps:
+
+1. Place your `.db` file under the `assets` folder in the project.
+2. Navigate to the database page within the app.
+3. Press the "Import database" button.
+
+Please note that the actual database has been removed from this repository due to its size.
+
+Make sure to set up the database correctly for the app to function properly.
 
 ## How to Use
 
