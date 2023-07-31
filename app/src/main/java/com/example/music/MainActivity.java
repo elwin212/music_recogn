@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity{
     private ImageButton recordBtn, clearBtn;
     private ImageView albumIV;
 
-    private Button importButton;
-
     private long recordingStartTimeMs = 0;
 
     private static final int RECORDING_DURATION_MS = 12000; //Set listening duration = 12s
@@ -152,18 +150,6 @@ public class MainActivity extends AppCompatActivity{
         initView();
 
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink_anime);
-        importButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Import database
-                DBImport db = new DBImport(MainActivity.this);
-                try {
-                    db.createDataBase();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
         recordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -482,10 +468,7 @@ public class MainActivity extends AppCompatActivity{
         albumIV = findViewById(R.id.imgAlbum);
         artistTV.setSelected(true);
         songNameTV.setText("Press the button to begin");
-        importButton = findViewById(R.id.button2);
-
         artistTV.setText("");
-
         recordBtn.setEnabled(true);
         clearBtn.setEnabled(false);
     }
