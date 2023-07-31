@@ -25,11 +25,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class DBcontroller extends AppCompatActivity {
-    private Button readDataBtn, generateFinger, importDatabase;
-    private DBHandler dbHandler;
+    private Button readDataBtn, createTable, generateFinger, importDatabase;
+    private DBHandler dbHandler = new DBHandler(DBcontroller.this);
 
     private Thread generateFingerPrint;
     private TextView tvNumber;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +75,19 @@ public class DBcontroller extends AppCompatActivity {
         initView();
         final byte[] fingerPrintsData = getIntent().getByteArrayExtra("FingerPrint");
 
-        dbHandler = new DBHandler(DBcontroller.this);
-
-
-
         readDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DBcontroller.this, ViewSongs.class);
                 startActivity(i);
 
+            }
+        });
+
+        createTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHandler.createSongTable();
             }
         });
 
@@ -98,6 +102,7 @@ public class DBcontroller extends AppCompatActivity {
                 else{
                     try {
                         db.createDataBase();
+                        Toast.makeText(DBcontroller.this, "Database has been imported!", Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -124,12 +129,12 @@ public class DBcontroller extends AppCompatActivity {
         readDataBtn = findViewById(R.id.idBtnReadData);
         generateFinger = findViewById(R.id.idBtnGenerateFingerPrint);
         importDatabase = findViewById(R.id.idBtnImportDatabase);
+        createTable = findViewById(R.id.idBtnCreateTable);
         tvNumber = findViewById(R.id.tvNumber);
     }
 
 
     private void generateHashUsingParallel() throws IOException {
-        dbHandler = new DBHandler(DBcontroller.this);
         DataHelper dataHelper = new DataHelper();
         Gson gson = new Gson();
 
@@ -170,7 +175,6 @@ public class DBcontroller extends AppCompatActivity {
     }
 
     private void generateHashMap() throws IOException {
-        dbHandler = new DBHandler(DBcontroller.this);
         DataHelper dataHelper = new DataHelper();
         final String[] list = getResources().getAssets().list("music");
         if(list.length == 0){

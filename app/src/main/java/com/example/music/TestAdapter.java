@@ -20,13 +20,8 @@ public class TestAdapter {
         mDbHelper = new DBImport(mContext);
     }
 
-    public TestAdapter createDatabase() throws SQLException {
-        try {
-            mDbHelper.createDataBase();
-        } catch (IOException mIOException) {
-            Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase");
-            throw new Error("UnableToCreateDatabase");
-        }
+    public TestAdapter createDatabase() throws SQLException, IOException {
+        mDbHelper.createDataBase();
         return this;
     }
 

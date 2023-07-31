@@ -5,7 +5,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,7 +14,7 @@ import java.io.OutputStream;
 
 public class DBImport extends SQLiteOpenHelper {
     private static final String TAG = "DataBaseHelper"; // Tag just for the LogCat window
-    private static final String DB_NAME ="song_database"; // Database name
+    private static final String DB_NAME = "song_database"; // Database name
     private static final int DB_VERSION = 1; // Database version
     private final File DB_FILE;
     private SQLiteDatabase mDataBase;
@@ -37,10 +36,8 @@ public class DBImport extends SQLiteOpenHelper {
             System.out.println("Creating database.");
             this.getReadableDatabase();
             this.close();
-            copyDataBase();
             // Copy the database from assets
             copyDataBase();
-            Log.e(TAG, "Database created");
         }
         else {
 
@@ -88,6 +85,7 @@ public class DBImport extends SQLiteOpenHelper {
         // mDataBase = SQLiteDatabase.openDatabase(DB_FILE, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         return mDataBase != null;
     }*/
+
 
     public SQLiteDatabase openDatabase() throws SQLException {
         File dbFile = mContext.getDatabasePath(DB_NAME);

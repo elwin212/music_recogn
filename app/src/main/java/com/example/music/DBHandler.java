@@ -24,6 +24,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME3 = "hashfingerprint";
 
+    private static final String SONG_TABLE_NAME = "songInfo";
+
     // below variable is for id column.
     private static final String ID_COL = "id";
 
@@ -195,6 +197,51 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put("fingerprint",jsonHash);
         db.insert(TABLE_NAME3, null,values);
         db.close();
+    }
+
+    public void addSongToTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        db.insert(SONG_TABLE_NAME, null,values);
+        db.close();
+    }
+
+    public void createSongTable(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        final String COLUMN_ID = "id";
+        final String COLUMN_SONG_NAME = "song_name";
+        final String COLUMN_ARTIST = "artist";
+        final String COLUMN_ALBUM = "album";
+        final String COLUMN_FINGERPRINT = "fingerprint";
+        String COLUMN_IMAGE = "image";
+        String createTableQuery = "CREATE TABLE " + SONG_TABLE_NAME + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_SONG_NAME + " TEXT NOT NULL, " +
+                COLUMN_ARTIST + " TEXT NOT NULL, " +
+                COLUMN_ALBUM + " TEXT NOT NULL, " +
+                COLUMN_FINGERPRINT + " TEXT NOT NULL, " +
+                COLUMN_IMAGE + " BLOB" +
+                ")";
+        if (isTableExists(db,SONG_TABLE_NAME)){
+            System.out.println("Table already exists.");
+            return;
+        }
+        else {
+            db.execSQL(createTableQuery);
+        }
+        return;
+    }
+
+    public boolean isTableExists(SQLiteDatabase db, String tableName) {
+        Cursor cursor = db.rawQuery("SELECT DISTINCT tbl_name FROM sqlite_master WHERE tbl_name = ?", new String[]{tableName});
+        boolean tableExists = cursor != null && cursor.getCount() > 0;
+        if (cursor != null) {
+            cursor.close();
+        }
+        return tableExists;
     }
 
     /*public ArrayList<SongFingerModel> readSongFinger(){
