@@ -15,7 +15,7 @@ This is an Android app similar to Shazam, designed to recognize and identify son
 ## Screenshots
 
 ![Screenshot 1](screenshots/result.png)
-![Screenshot 2](screenshots/history_screenshot.png.png)
+![Screenshot 2](screenshots/history_screenshot.png)
 
 ## Installation
 
