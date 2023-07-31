@@ -29,6 +29,22 @@
             android:textAllCaps="false" />
 
         <Button
+            android:id="@+id/idBtnImportDatabase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Import Database"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/idBtnCreateTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Create Table"
+            android:textAllCaps="false" />
+
+        <Button
             android:id="@+id/idBtnGenerateFingerPrint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,13 +52,7 @@
             android:text="Generate FingerPrint"
             android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/idBtnImportDatabase"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Import Database"
-            android:textAllCaps="false" />
+
 
         <TextView
             android:layout_width="match_parent"
