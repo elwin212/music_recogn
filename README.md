@@ -18,10 +18,12 @@ id, song_name, artist, album, fingerprint, blob_image.
 - Searching history
 
 ## Screenshots
-
 ![Screenshot 1](screenshots/homepage.png)
 ![Screenshot 2](screenshots/result.png)
 ![Screenshot 3](screenshots/history_screenshot.png)
+
+## Demo Video
+![Demo](https://www.youtube.com/shorts/nKTkchqOf60)
 
 ## Installation
 
